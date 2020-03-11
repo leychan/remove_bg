@@ -6,9 +6,10 @@ require __DIR__ . '/config/config.php';
 
 use \Intervention\Image\ImageManagerStatic as Image;
 
-//原始图片路径
+//图片路径
 $src = '/home/chenlei/tmp/test.png';
-$bg = 'bg.png';
+$bg = __DIR__ . '/background_pic/blue.png';
+$dst = __DIR__ . '/output_pic/' . substr(md5('chen'), 0, 8) . time() . '.png';
 
 $image = file_get_contents($src);
 $client = new AipBodyAnalysis(APP_ID, API_KEY, SECRET_KEY);
@@ -24,4 +25,4 @@ $image_fore = Image::make(base64_decode($result['foreground']));
 //设置背景图
 $bg = Image::make($bg);
 $r = $bg->insert($image_fore, 'center');
-$r->save('test4.png');
+$r->save($dst);
